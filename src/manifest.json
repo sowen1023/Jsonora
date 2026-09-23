@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Jsonora — JSON 查看器",
+  "version": "0.1.0",
+  "description": "美观、快速的 JSON 查看器：自动渲染 JSON 响应、树形视图、语法高亮、搜索与格式化。A beautiful JSON viewer.",
+  "minimum_chrome_version": "120",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Jsonora",
+    "default_popup": "pages/popup/index.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "pages/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "devtools_page": "pages/devtools/devtools.html",
+  "permissions": ["storage", "contextMenus", "clipboardWrite"]
+}

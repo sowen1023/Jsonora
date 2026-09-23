@@ -1,0 +1,516 @@
+/**
+ * Design tokens.
+ *
+ * `:where(:host, .jr-root)` is the load-bearing bit: the same stylesheet is used as a
+ * normal document stylesheet on extension pages and injected into a shadow root on
+ * arbitrary sites. `:where()` keeps the selector list forgiving, so the invalid `:host`
+ * in a document context does not invalidate the rule.
+ */
+
+:where(:host, .jr-root) {
+  color-scheme: dark;
+
+  /* surfaces */
+  --bg: #1f1f1f;
+  --bg-header: #181818;
+  --surface: #252526;
+  --surface-2: #2b2b2b;
+  --surface-3: #313131;
+  --surface-hover: rgba(117, 191, 255, 0.1);
+  --surface-active: rgba(117, 191, 255, 0.18);
+
+  /* lines */
+  --border: #2b2b2b;
+  --border-strong: #3c3c3c;
+  --guide: rgba(110, 118, 129, 0.12);
+
+  /* type */
+  --text: #cccccc;
+  --text-dim: #a6a6a6;
+  --text-faint: #6e7681;
+  --text-inverse: #ffffff;
+
+  /* brand */
+  --accent: #75bfff;
+  --accent-strong: #0078d4;
+  --accent-cyan: #4ec9b0;
+  --accent-soft: rgba(0, 120, 212, 0.2);
+  --accent-ring: rgba(0, 120, 212, 0.45);
+  --brand-from: #0078d4;
+  --brand-to: #265da8;
+  --brand-stroke: #ffffff;
+  --brand-dot: #9cdcfe;
+  --brand-gradient: linear-gradient(145deg, var(--brand-from), var(--brand-to));
+
+  /* semantic */
+  --warn: #e2c08d;
+  --warn-soft: rgba(226, 192, 141, 0.13);
+  --danger: #f85149;
+  --danger-soft: rgba(248, 81, 73, 0.13);
+  --ok: #4ec9b0;
+  --ok-soft: rgba(78, 201, 176, 0.13);
+
+  /* json tokens */
+  --t-key: #9cdcfe;
+  --t-string: #ce9178;
+  --t-number: #b5cea8;
+  --t-bool: #569cd6;
+  --t-null: #c586c0;
+  --t-brace: #ffd700;
+  --t-brace-0: #ffd700;
+  --t-brace-1: #da70d6;
+  --t-brace-2: #179fff;
+  --t-punct: #cccccc;
+  --raw-guide: #404040;
+  --t-hit: rgba(158, 106, 3, 0.36);
+  --t-hit-current: rgba(158, 106, 3, 0.62);
+
+  /* shape */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius: 7px;
+  --radius-lg: 9px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow: 0 14px 36px rgba(0, 0, 0, 0.38);
+  --shadow-lg: 0 28px 72px rgba(0, 0, 0, 0.5);
+
+  /* metrics — mirrored in TS by `src/ui/metrics.ts`, which sets them as inline vars */
+  --row-h: 24px;
+  --indent: 16px;
+  --raw-line-h: 20px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 120ms;
+  --dur: 180ms;
+  --dur-slow: 220ms;
+
+  --font-ui: Inter, 'Avenir Next', 'SF Pro Text', -apple-system, BlinkMacSystemFont,
+    'Segoe UI Variable Text', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei UI', system-ui, sans-serif;
+  --font-display: Georgia, 'Iowan Old Style', 'Noto Serif CJK SC', 'Source Han Serif SC',
+    'Songti SC', SimSun, serif;
+  /* Ordered by what actually resolves on each platform. `ui-monospace` used to come first,
+     but Chrome on macOS does not match it, so the stack silently landed on Menlo. The CJK
+     faces at the end are deliberate: no system monospace has Chinese glyphs, so a payload
+     with Chinese strings falls back to a proportional face and the mixed metrics show. */
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', Menlo, Monaco, 'SFMono-Regular',
+    Consolas, 'Liberation Mono', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', monospace;
+
+  --font-size: 13px;
+}
+
+:where(.jr-root[data-theme='light']) {
+  color-scheme: light;
+
+  --bg: #ffffff;
+  --bg-header: #f8f8f8;
+  --surface: #f8f8f8;
+  --surface-2: #f3f3f3;
+  --surface-3: #e5e5e5;
+  --surface-hover: rgba(0, 95, 184, 0.08);
+  --surface-active: rgba(0, 95, 184, 0.15);
+
+  --border: #e5e5e5;
+  --border-strong: #cecece;
+  --guide: rgba(110, 118, 129, 0.12);
+
+  --text: #3b3b3b;
+  --text-dim: #616161;
+  --text-faint: #6e7681;
+  --text-inverse: #ffffff;
+
+  --accent: #005fb8;
+  --accent-strong: #005fb8;
+  --accent-cyan: #0070c1;
+  --accent-soft: rgba(0, 95, 184, 0.1);
+  --accent-ring: rgba(0, 95, 184, 0.32);
+  --brand-from: #005fb8;
+  --brand-to: #3c70b8;
+  --brand-stroke: #ffffff;
+  --brand-dot: #b9ddff;
+
+  --warn: #895503;
+  --warn-soft: rgba(137, 85, 3, 0.1);
+  --danger: #c0352b;
+  --danger-soft: rgba(192, 53, 43, 0.1);
+  --ok: #16825d;
+  --ok-soft: rgba(22, 130, 93, 0.1);
+
+  --t-key: #001080;
+  --t-string: #a31515;
+  --t-number: #098658;
+  --t-bool: #0000ff;
+  --t-null: #af00db;
+  --t-brace: #9a6d00;
+  --t-brace-0: #9a6d00;
+  --t-brace-1: #a142a1;
+  --t-brace-2: #006cc1;
+  --t-punct: #3b3b3b;
+  --raw-guide: #d3d3d3;
+  --t-hit: rgba(255, 196, 0, 0.25);
+  --t-hit-current: rgba(255, 176, 0, 0.48);
+
+  --shadow-sm: 0 1px 2px rgba(27, 31, 36, 0.06);
+  --shadow: 0 12px 34px rgba(27, 31, 36, 0.11);
+  --shadow-lg: 0 24px 64px rgba(27, 31, 36, 0.16);
+}
+
+/* Palette and brightness are orthogonal: every colour family has a light and dark appearance. */
+/* VS Code Modern: workbench surfaces and editor syntax, with a light counterpart. */
+:where(.jr-root[data-palette='vscode']) {
+  --bg: #1f1f1f;
+  --bg-header: #181818;
+  --surface: #252526;
+  --surface-2: #2b2b2b;
+  --surface-3: #313131;
+  --surface-hover: rgba(117, 191, 255, 0.1);
+  --surface-active: rgba(117, 191, 255, 0.18);
+  --border: #2b2b2b;
+  --border-strong: #3c3c3c;
+  --guide: rgba(110, 118, 129, 0.12);
+  --text: #cccccc;
+  --text-dim: #a6a6a6;
+  --text-faint: #6e7681;
+  --text-inverse: #ffffff;
+  --accent: #75bfff;
+  --accent-strong: #0078d4;
+  --accent-cyan: #4ec9b0;
+  --accent-soft: rgba(0, 120, 212, 0.2);
+  --accent-ring: rgba(0, 120, 212, 0.45);
+  --brand-from: #0078d4;
+  --brand-to: #265da8;
+  --brand-dot: #9cdcfe;
+  --warn: #e2c08d;
+  --warn-soft: rgba(226, 192, 141, 0.13);
+  --danger: #f85149;
+  --danger-soft: rgba(248, 81, 73, 0.13);
+  --ok: #4ec9b0;
+  --ok-soft: rgba(78, 201, 176, 0.13);
+  --t-key: #9cdcfe;
+  --t-string: #ce9178;
+  --t-number: #b5cea8;
+  --t-bool: #569cd6;
+  --t-null: #c586c0;
+  --t-brace: #ffd700;
+  --t-brace-0: #ffd700;
+  --t-brace-1: #da70d6;
+  --t-brace-2: #179fff;
+  --t-punct: #cccccc;
+  --raw-guide: #404040;
+  --t-hit: rgba(158, 106, 3, 0.36);
+  --t-hit-current: rgba(158, 106, 3, 0.62);
+}
+
+:where(.jr-root[data-theme='light'][data-palette='vscode']) {
+  --bg: #ffffff;
+  --bg-header: #f8f8f8;
+  --surface: #f8f8f8;
+  --surface-2: #f3f3f3;
+  --surface-3: #e5e5e5;
+  --surface-hover: rgba(0, 95, 184, 0.08);
+  --surface-active: rgba(0, 95, 184, 0.15);
+  --border: #e5e5e5;
+  --border-strong: #cecece;
+  --guide: rgba(110, 118, 129, 0.12);
+  --text: #3b3b3b;
+  --text-dim: #616161;
+  --text-faint: #6e7681;
+  --text-inverse: #ffffff;
+  --accent: #005fb8;
+  --accent-strong: #005fb8;
+  --accent-cyan: #0070c1;
+  --accent-soft: rgba(0, 95, 184, 0.1);
+  --accent-ring: rgba(0, 95, 184, 0.32);
+  --brand-from: #005fb8;
+  --brand-to: #3c70b8;
+  --brand-dot: #b9ddff;
+  --warn: #895503;
+  --warn-soft: rgba(137, 85, 3, 0.1);
+  --danger: #c0352b;
+  --danger-soft: rgba(192, 53, 43, 0.1);
+  --ok: #16825d;
+  --ok-soft: rgba(22, 130, 93, 0.1);
+  --t-key: #001080;
+  --t-string: #a31515;
+  --t-number: #098658;
+  --t-bool: #0000ff;
+  --t-null: #af00db;
+  --t-brace: #9a6d00;
+  --t-brace-0: #9a6d00;
+  --t-brace-1: #a142a1;
+  --t-brace-2: #006cc1;
+  --t-punct: #3b3b3b;
+  --raw-guide: #d3d3d3;
+  --t-hit: rgba(255, 196, 0, 0.25);
+  --t-hit-current: rgba(255, 176, 0, 0.48);
+}
+
+/* GitHub palettes use Primer theme colours for the core surfaces, text and syntax.
+   GitHub Dimmed does not ship a light counterpart, so its light mode is adapted
+   from GitHub Light with a softer canvas. */
+:where(.jr-root[data-palette='github']) {
+  --bg: #0d1117;
+  --bg-header: #161b22;
+  --surface: #161b22;
+  --surface-2: #21262d;
+  --surface-3: #30363d;
+  --surface-hover: rgba(56, 139, 253, 0.09);
+  --surface-active: rgba(56, 139, 253, 0.16);
+  --border: #30363d;
+  --border-strong: #484f58;
+  --guide: rgba(139, 148, 158, 0.12);
+  --text: #e6edf3;
+  --text-dim: #9da7b2;
+  --text-faint: #7d8590;
+  --text-inverse: #ffffff;
+  --accent: #58a6ff;
+  --accent-strong: #1f6feb;
+  --accent-cyan: #79c0ff;
+  --accent-soft: rgba(56, 139, 253, 0.15);
+  --accent-ring: rgba(88, 166, 255, 0.38);
+  --brand-from: #1f6feb;
+  --brand-to: #8250df;
+  --brand-dot: #a5d6ff;
+  --warn: #d29922;
+  --warn-soft: rgba(210, 153, 34, 0.13);
+  --danger: #f85149;
+  --danger-soft: rgba(248, 81, 73, 0.13);
+  --ok: #3fb950;
+  --ok-soft: rgba(63, 185, 80, 0.13);
+  --t-key: #79c0ff;
+  --t-string: #a5d6ff;
+  --t-number: #ffa657;
+  --t-bool: #ff7b72;
+  --t-null: #8b949e;
+  --t-brace: #c9d1d9;
+  --t-brace-0: #e3b341;
+  --t-brace-1: #d2a8ff;
+  --t-brace-2: #79c0ff;
+  --t-punct: #8b949e;
+  --raw-guide: #30363d;
+}
+
+:where(.jr-root[data-theme='light'][data-palette='github']) {
+  --bg: #ffffff;
+  --bg-header: #f6f8fa;
+  --surface: #f6f8fa;
+  --surface-2: #eaeef2;
+  --surface-3: #d0d7de;
+  --surface-hover: rgba(9, 105, 218, 0.08);
+  --surface-active: rgba(9, 105, 218, 0.14);
+  --border: #d0d7de;
+  --border-strong: #afb8c1;
+  --guide: rgba(87, 96, 106, 0.11);
+  --text: #1f2328;
+  --text-dim: #57606a;
+  --text-faint: #6e7781;
+  --text-inverse: #ffffff;
+  --accent: #0969da;
+  --accent-strong: #0969da;
+  --accent-cyan: #0550ae;
+  --accent-soft: rgba(9, 105, 218, 0.11);
+  --accent-ring: rgba(9, 105, 218, 0.33);
+  --brand-from: #0969da;
+  --brand-to: #8250df;
+  --brand-dot: #ddf4ff;
+  --warn: #9a6700;
+  --warn-soft: rgba(154, 103, 0, 0.1);
+  --danger: #cf222e;
+  --danger-soft: rgba(207, 34, 46, 0.1);
+  --ok: #1a7f37;
+  --ok-soft: rgba(26, 127, 55, 0.1);
+  --t-key: #0550ae;
+  --t-string: #0a3069;
+  --t-number: #953800;
+  --t-bool: #cf222e;
+  --t-null: #6e7781;
+  --t-brace: #24292f;
+  --t-brace-0: #9a6700;
+  --t-brace-1: #8250df;
+  --t-brace-2: #0550ae;
+  --t-punct: #57606a;
+  --raw-guide: #d0d7de;
+}
+
+:where(.jr-root[data-palette='github-dimmed']) {
+  --bg: #22272e;
+  --bg-header: #1c2128;
+  --surface: #2d333b;
+  --surface-2: #373e47;
+  --surface-3: #444c56;
+  --surface-hover: rgba(83, 155, 245, 0.1);
+  --surface-active: rgba(83, 155, 245, 0.17);
+  --border: #444c56;
+  --border-strong: #545d68;
+  --guide: rgba(118, 131, 144, 0.13);
+  --text: #adbac7;
+  --text-dim: #909dab;
+  --text-faint: #768390;
+  --text-inverse: #ffffff;
+  --accent: #539bf5;
+  --accent-strong: #316dca;
+  --accent-cyan: #6cb6ff;
+  --accent-soft: rgba(83, 155, 245, 0.16);
+  --accent-ring: rgba(83, 155, 245, 0.4);
+  --brand-from: #316dca;
+  --brand-to: #986ee2;
+  --brand-dot: #96d0ff;
+  --warn: #daaa3f;
+  --warn-soft: rgba(218, 170, 63, 0.14);
+  --danger: #f47067;
+  --danger-soft: rgba(244, 112, 103, 0.13);
+  --ok: #57ab5a;
+  --ok-soft: rgba(87, 171, 90, 0.13);
+  --t-key: #6cb6ff;
+  --t-string: #96d0ff;
+  --t-number: #f69d50;
+  --t-bool: #f47067;
+  --t-null: #768390;
+  --t-brace: #adbac7;
+  --t-brace-0: #daaa3f;
+  --t-brace-1: #dcbdfb;
+  --t-brace-2: #6cb6ff;
+  --t-punct: #909dab;
+  --raw-guide: #444c56;
+}
+
+:where(.jr-root[data-theme='light'][data-palette='github-dimmed']) {
+  --bg: #f6f8fa;
+  --bg-header: #eaeef2;
+  --surface: #ffffff;
+  --surface-2: #eaeef2;
+  --surface-3: #d8dee4;
+  --surface-hover: rgba(9, 105, 218, 0.07);
+  --surface-active: rgba(9, 105, 218, 0.12);
+  --border: #d8dee4;
+  --border-strong: #afb8c1;
+  --guide: rgba(87, 96, 106, 0.1);
+  --text: #32383f;
+  --text-dim: #57606a;
+  --text-faint: #6e7781;
+  --text-inverse: #ffffff;
+  --accent: #0969da;
+  --accent-strong: #0969da;
+  --accent-cyan: #0550ae;
+  --accent-soft: rgba(9, 105, 218, 0.1);
+  --accent-ring: rgba(9, 105, 218, 0.3);
+  --brand-from: #0969da;
+  --brand-to: #8250df;
+  --brand-dot: #ddf4ff;
+  --warn: #9a6700;
+  --warn-soft: rgba(154, 103, 0, 0.1);
+  --danger: #cf222e;
+  --danger-soft: rgba(207, 34, 46, 0.1);
+  --ok: #1a7f37;
+  --ok-soft: rgba(26, 127, 55, 0.1);
+  --t-key: #0550ae;
+  --t-string: #0a3069;
+  --t-number: #953800;
+  --t-bool: #cf222e;
+  --t-null: #6e7781;
+  --t-brace: #32383f;
+  --t-brace-0: #9a6700;
+  --t-brace-1: #8250df;
+  --t-brace-2: #0550ae;
+  --t-punct: #57606a;
+  --raw-guide: #d8dee4;
+}
+
+:where(.jr-root[data-palette='github-contrast']) {
+  --bg: #0a0c10;
+  --bg-header: #272b33;
+  --surface: #272b33;
+  --surface-2: #343943;
+  --surface-3: #4a515e;
+  --surface-hover: rgba(113, 183, 255, 0.12);
+  --surface-active: rgba(113, 183, 255, 0.2);
+  --border: #7a828e;
+  --border-strong: #9ea7b3;
+  --guide: rgba(158, 167, 179, 0.18);
+  --text: #f0f3f6;
+  --text-dim: #bdc5ce;
+  --text-faint: #9ea7b3;
+  --text-inverse: #0a0c10;
+  --accent: #71b7ff;
+  --accent-strong: #71b7ff;
+  --accent-cyan: #91cbff;
+  --accent-soft: rgba(113, 183, 255, 0.18);
+  --accent-ring: rgba(113, 183, 255, 0.5);
+  --brand-from: #409eff;
+  --brand-to: #b87fff;
+  --brand-dot: #addcff;
+  --warn: #eac55f;
+  --warn-soft: rgba(234, 197, 95, 0.16);
+  --danger: #ff9492;
+  --danger-soft: rgba(255, 148, 146, 0.15);
+  --ok: #7ee787;
+  --ok-soft: rgba(126, 231, 135, 0.14);
+  --t-key: #91cbff;
+  --t-string: #addcff;
+  --t-number: #ffb757;
+  --t-bool: #ff9492;
+  --t-null: #9ea7b3;
+  --t-brace: #f0f3f6;
+  --t-brace-0: #eac55f;
+  --t-brace-1: #dbb7ff;
+  --t-brace-2: #91cbff;
+  --t-punct: #bdc5ce;
+  --raw-guide: #7a828e;
+}
+
+:where(.jr-root[data-theme='light'][data-palette='github-contrast']) {
+  --bg: #ffffff;
+  --bg-header: #e7ecf0;
+  --surface: #f1f4f7;
+  --surface-2: #e7ecf0;
+  --surface-3: #c6ced6;
+  --surface-hover: rgba(3, 73, 180, 0.09);
+  --surface-active: rgba(3, 73, 180, 0.17);
+  --border: #20252c;
+  --border-strong: #20252c;
+  --guide: rgba(32, 37, 44, 0.16);
+  --text: #0e1116;
+  --text-dim: #444d58;
+  --text-faint: #66707b;
+  --text-inverse: #ffffff;
+  --accent: #0349b4;
+  --accent-strong: #0349b4;
+  --accent-cyan: #023b95;
+  --accent-soft: rgba(3, 73, 180, 0.12);
+  --accent-ring: rgba(3, 73, 180, 0.4);
+  --brand-from: #0349b4;
+  --brand-to: #622cbc;
+  --brand-dot: #ddf4ff;
+  --warn: #702c00;
+  --warn-soft: rgba(112, 44, 0, 0.1);
+  --danger: #a0111f;
+  --danger-soft: rgba(160, 17, 31, 0.1);
+  --ok: #116329;
+  --ok-soft: rgba(17, 99, 41, 0.1);
+  --t-key: #023b95;
+  --t-string: #032563;
+  --t-number: #702c00;
+  --t-bool: #a0111f;
+  --t-null: #66707b;
+  --t-brace: #0e1116;
+  --t-brace-0: #702c00;
+  --t-brace-1: #622cbc;
+  --t-brace-2: #023b95;
+  --t-punct: #444d58;
+  --raw-guide: #88929d;
+}
+
+:where(.jr-root[data-motion='off']) * {
+  animation: none !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.jr-root) * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

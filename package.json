@@ -1,0 +1,36 @@
+{
+  "name": "jsonora",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "Jsonora — 一个好看、好用的 Chrome JSON 查看器",
+  "scripts": {
+    "dev": "vite",
+    "build": "node tools/build.mjs",
+    "build:watch": "node tools/build.mjs --watch",
+    "icons": "node tools/gen-icons.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "fixtures": "node tools/test-server.mjs",
+    "shot": "node tools/cdp-shot.mjs",
+    "zip": "node tools/build.mjs --zip"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.13",
+    "@lezer/highlight": "^1.2.3",
+    "preact": "^10.29.8"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.3.0",
+    "@types/node": "^26.6.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^4.1.11"
+  }
+}

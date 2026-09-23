@@ -1,0 +1,6 @@
+/* Extension-page stylesheet: tokens + components + page-level reset.
+   The content script imports tokens.css and app.css separately with `?inline` instead,
+   so this file is only ever used by real HTML pages. */
+@import './tokens.css';
+@import './app.css';
+@import './page.css';

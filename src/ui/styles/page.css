@@ -1,0 +1,21 @@
+/* Extension pages only: the app fills the viewport. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #111318;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  html,
+  body {
+    background: #f6f7f9;
+    color-scheme: light;
+  }
+}
+
+#app {
+  height: 100%;
+}
