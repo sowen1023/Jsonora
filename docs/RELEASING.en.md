@@ -21,7 +21,7 @@ unzip -p jsonora-0.1.0.zip manifest.json
 
 The archive name comes from `package.json`; the build script also copies that version into the packaged manifest. For future releases, bump the version in `package.json` and its lockfile first. If the logo changes, run `npm run icons` before packaging. `npm run zip` rebuilds `dist/` and writes the ZIP to the repository root, failing with a nonzero exit code if packaging fails.
 
-In `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and point it to `dist/`. Rebuild and reload the extension after changing code. Do not load the repository root or nest the `dist/` folder inside the ZIP.
+In `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and point it to `dist/`. Rebuild and reload the extension after changing code. Do not select the repository root, the ZIP itself, or Chrome's temporary `UnpackedExtensions` directory; do not nest `dist/` inside the ZIP. If you only have the ZIP, extract it and select the folder containing `manifest.json`.
 
 ## Pre-release checklist
 

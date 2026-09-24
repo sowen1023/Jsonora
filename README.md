@@ -35,7 +35,7 @@ npm ci
 npm run build
 ```
 
-在 `chrome://extensions` 开启「开发者模式」→「加载已解压的扩展程序」→ 选择项目中的 `dist/`。随后打开一个 JSON 接口，或点击扩展图标粘贴 JSON。修改源码后重新构建，并在扩展列表中刷新。
+在 `chrome://extensions` 开启「开发者模式」→「加载已解压的扩展程序」→ 选择项目中的 `dist/`。不要选择 ZIP 文件或 Chrome 的临时 `UnpackedExtensions` 目录。随后打开一个 JSON 接口，或点击扩展图标粘贴 JSON。修改源码后重新构建，并在扩展列表中刷新。如果手里只有发布 ZIP，请先解压，再选择其中包含 `manifest.json` 的文件夹。
 
 要生成供商店上传的 ZIP，运行 `npm run zip`。实际提交流程和上架前检查见 [打包与发布](docs/RELEASING.md)；构建脚本不会自动发布。
 

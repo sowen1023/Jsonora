@@ -21,7 +21,7 @@ unzip -p jsonora-0.1.0.zip manifest.json
 
 文件名里的版本来自 `package.json`，构建脚本会同步写入打包后的 manifest；以后发布新版本时，先修改 `package.json` 的版本号和对应的 lockfile，再重新运行命令。若修改了 Logo，先执行 `npm run icons` 重新生成四种 PNG 图标。`npm run zip` 会重新构建 `dist/`，并在项目根目录生成 ZIP；打包失败会返回非零状态。
 
-在 `chrome://extensions` 开启「开发者模式」，选择「加载已解压的扩展程序」，指向 `dist/`。改代码后重新构建并在扩展列表中刷新。不要选择项目根目录，也不要把 `dist/` 文件夹本身再包一层放进 ZIP。
+在 `chrome://extensions` 开启「开发者模式」，选择「加载已解压的扩展程序」，指向 `dist/`。改代码后重新构建并在扩展列表中刷新。不要选择项目根目录、ZIP 文件或 Chrome 的临时 `UnpackedExtensions` 目录，也不要把 `dist/` 文件夹本身再包一层放进 ZIP。如果只有 ZIP，先解压并选择包含 `manifest.json` 的目录。
 
 ## 发布前检查
 

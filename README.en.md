@@ -35,7 +35,7 @@ npm ci
 npm run build
 ```
 
-In `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and select this project's `dist/` directory. Then open a JSON endpoint or click the extension icon to paste JSON. Rebuild and reload the extension after changing source code.
+In `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and select this project's `dist/` directory. Do not select the ZIP itself or Chrome's temporary `UnpackedExtensions` directory. Then open a JSON endpoint or click the extension icon to paste JSON. Rebuild and reload the extension after changing source code. If you only have a release ZIP, extract it first and select the folder containing `manifest.json`.
 
 Run `npm run zip` to create a ZIP for the Chrome Web Store. The [release guide](docs/RELEASING.en.md) covers the submission checklist; building a ZIP does not publish the extension.
 
