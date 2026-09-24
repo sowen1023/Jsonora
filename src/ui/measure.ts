@@ -40,7 +40,7 @@ function domWidth(text: string, font: string): number {
   return width
 }
 
-export function createTextMeasure(fontSize: number, fontFamily: CodeFont = 'modern'): (text: string) => number {
+export function createTextMeasure(fontSize: number, fontFamily: CodeFont = 'jetbrains'): (text: string) => number {
   const font = `${fontSize}px ${CODE_FONT_STACKS[fontFamily]}`
   const ctx = canvas()
   const cache = new Map<string, number>()

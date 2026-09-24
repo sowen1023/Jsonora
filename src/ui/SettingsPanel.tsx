@@ -2,6 +2,7 @@ import type { ComponentChildren } from 'preact'
 import type { IndentOption } from '@/core/format'
 import type { Settings } from '@/platform/settings'
 import { AutoTheme, Check, Close, CollapseAll, ExpandAll, Moon, Sun, Wand } from './Icons'
+import { FontSelect } from './FontSelect'
 import { useI18n } from './i18n'
 
 interface SettingsPanelProps {
@@ -29,10 +30,6 @@ export function SettingsPanel(props: SettingsPanelProps) {
     onClose,
   } = props
   const { t } = useI18n()
-  const runAction = (action: () => void) => {
-    action()
-    onClose()
-  }
   const themes: { value: Settings['theme']; label: string; icon: ComponentChildren }[] = [
     { value: 'auto', label: t('themeAuto'), icon: <AutoTheme size={15} /> },
     { value: 'light', label: t('themeLight'), icon: <Sun size={15} /> },
@@ -44,20 +41,13 @@ export function SettingsPanel(props: SettingsPanelProps) {
     { value: 'github-dimmed', label: t('paletteGithubDimmed') },
     { value: 'github-contrast', label: t('paletteGithubContrast') },
   ]
-  const fonts: { value: Settings['fontFamily']; label: string }[] = [
-    { value: 'modern', label: t('fontModern') },
-    { value: 'system', label: t('fontSystem') },
-    { value: 'sans', label: t('fontSans') },
-  ]
-
   return (
-    <div class="jr-settings-layer" role="presentation" onClick={onClose}>
+    <div class="jr-settings-layer">
       <aside
         class="jr-settings-panel"
         role="dialog"
-        aria-modal="true"
+        aria-modal="false"
         aria-label={t('settings')}
-        onClick={(event) => event.stopPropagation()}
       >
         <header class="jr-settings-head">
           <div>
@@ -71,14 +61,42 @@ export function SettingsPanel(props: SettingsPanelProps) {
 
         <div class="jr-settings-body">
           <section class="jr-settings-section">
-            <div class="jr-settings-section-title">{t('documentActions')}</div>
-            <div class="jr-settings-section-desc">{t('documentActionsDesc')}</div>
+            <div class="jr-settings-section-title">{t('rawActions')}</div>
+            <div class="jr-settings-section-desc">{t('rawActionsDesc')}</div>
+            <div class="jr-choice-grid is-two">
+              {([2, 4, 'tab'] as const).map((indent) => (
+                <button
+                  key={String(indent)}
+                  class="jr-choice jr-settings-action"
+                  type="button"
+                  disabled={!hasDoc}
+                  onClick={() => onPretty(indent)}
+                >
+                  <Wand size={14} />
+                  <span>{t(indent === 2 ? 'pretty2' : indent === 4 ? 'pretty4' : 'prettyTab')}</span>
+                </button>
+              ))}
+              <button
+                class="jr-choice jr-settings-action"
+                type="button"
+                disabled={!hasDoc}
+                onClick={onMinify}
+              >
+                <Wand size={14} />
+                <span>{t('minify')}</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="jr-settings-section">
+            <div class="jr-settings-section-title">{t('structureActions')}</div>
+            <div class="jr-settings-section-desc">{t('structureActionsDesc')}</div>
             <div class="jr-choice-grid is-two">
               <button
                 class="jr-choice jr-settings-action"
                 type="button"
                 disabled={!hasDoc}
-                onClick={() => runAction(onExpandAll)}
+                onClick={onExpandAll}
               >
                 <ExpandAll size={14} />
                 <span>{t('expandAll')}</span>
@@ -87,41 +105,15 @@ export function SettingsPanel(props: SettingsPanelProps) {
                 class="jr-choice jr-settings-action"
                 type="button"
                 disabled={!hasDoc}
-                onClick={() => runAction(onCollapseAll)}
+                onClick={onCollapseAll}
               >
                 <CollapseAll size={14} />
                 <span>{t('collapseAll')}</span>
               </button>
             </div>
-            <div class="jr-setting-group">
-              <b>{t('formatCurrent')}</b>
-              <small>{t('formatCurrentDesc')}</small>
-              <div class="jr-choice-grid is-two">
-                {([2, 4, 'tab'] as const).map((indent) => (
-                  <button
-                    key={String(indent)}
-                    class="jr-choice jr-settings-action"
-                    type="button"
-                    disabled={!hasDoc}
-                    onClick={() => runAction(() => onPretty(indent))}
-                  >
-                    <Wand size={14} />
-                    <span>{t(indent === 2 ? 'pretty2' : indent === 4 ? 'pretty4' : 'prettyTab')}</span>
-                  </button>
-                ))}
-                <button
-                  class="jr-choice jr-settings-action"
-                  type="button"
-                  disabled={!hasDoc}
-                  onClick={() => runAction(onMinify)}
-                >
-                  <Wand size={14} />
-                  <span>{t('minify')}</span>
-                </button>
-              </div>
-            </div>
             <ToggleRow
               label={t('sortKeys')}
+              description={t('sortKeysDesc')}
               checked={settings.sortKeys}
               onChange={onSortKeys}
             />
@@ -191,22 +183,11 @@ export function SettingsPanel(props: SettingsPanelProps) {
             <div class="jr-setting-group">
               <b>{t('fontFamily')}</b>
               <small>{t('fontFamilyDesc')}</small>
-              <div class="jr-choice-grid" role="radiogroup" aria-label={t('fontFamily')}>
-                {fonts.map((font) => (
-                  <button
-                    key={font.value}
-                    class={settings.fontFamily === font.value ? 'jr-choice is-active' : 'jr-choice'}
-                    type="button"
-                    role="radio"
-                    aria-checked={settings.fontFamily === font.value}
-                    onClick={() => onChange({ fontFamily: font.value })}
-                  >
-                    <span class="jr-font-sample" data-font-sample={font.value}>Aa</span>
-                    <span>{font.label}</span>
-                    {settings.fontFamily === font.value && <Check size={14} />}
-                  </button>
-                ))}
-              </div>
+              <FontSelect
+                value={settings.fontFamily}
+                language={settings.language}
+                onChange={(fontFamily) => onChange({ fontFamily })}
+              />
             </div>
 
             <label class="jr-setting-row">

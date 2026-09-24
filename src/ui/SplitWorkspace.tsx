@@ -128,7 +128,7 @@ export function SplitWorkspace(props: SplitWorkspaceProps) {
           onClick={() => props.onRightCollapsedChange(false)}
         >
           {props.rightMode === 'graph' ? <Graph /> : <Tree />}
-          <span>{t('visualPanel')}</span>
+          <span>{t(props.rightMode === 'graph' ? 'viewGraph' : 'viewTree')}</span>
         </button>
       ) : (
         <section class="jr-pane is-visual" aria-label={t('visualPanel')}>

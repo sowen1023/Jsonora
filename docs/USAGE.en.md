@@ -49,6 +49,6 @@ The parser tries to handle XSSI prefixes, comments, trailing commas, single-quot
 
 ## Settings and limits
 
-Settings include English/Chinese, light/dark mode, VS Code and GitHub theme families, field font, font size, indentation, animation, line wrapping, and a node cap. Graph is compact by default and its grid is off.
+Settings include English/Chinese, light/dark mode, VS Code and GitHub theme families, code font, font size, indentation, animation, line wrapping, and a node cap. The font dropdown previews each choice. JetBrains Mono (the default), Fira Code, and Inconsolata are bundled; system faces such as Menlo and Monaco need to be installed locally and otherwise fall back. Graph is compact by default and its grid is off.
 
 For documents above the node cap (300,000 by default), the deepest content may not all enter the tree model; search and raw view remain available. Raw view automatically turns off wrapping above 20,000 lines to keep scrolling responsive. Chrome prevents content scripts from running on internal pages and Chrome Web Store pages.

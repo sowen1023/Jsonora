@@ -172,11 +172,11 @@ UI: Inter, "Avenir Next", "SF Pro Text", -apple-system, BlinkMacSystemFont,
 Headings: Georgia, "Iowan Old Style", "Noto Serif CJK SC", "Source Han Serif SC",
           "Songti SC", SimSun, serif
 
-Code (modern monospace, default): "JetBrains Mono", "Cascadia Code", Menlo, Monaco,
-                                  SFMono-Regular, Consolas, "PingFang SC", "Microsoft YaHei", monospace
+Code (default): "Jsonora JetBrains Mono", Menlo, Consolas,
+                "PingFang SC", "Microsoft YaHei", monospace
 ```
 
-The document-style serif stack is for headings; controls and body copy use a clear sans-serif stack. JSON fields can use modern monospace, system monospace, or sans-serif. Chinese content falls back explicitly to PingFang SC or Microsoft YaHei.
+The document-style serif stack is for headings; controls and body copy use a clear sans-serif stack. JSON content can use bundled JetBrains Mono, Fira Code, and Inconsolata, or locally installed Menlo, Monaco, and Courier New. Chinese content falls back to PingFang SC or Microsoft YaHei.
 
 ### 4.6 Motion inventory
 
@@ -212,7 +212,7 @@ Settings can disable these implemented effects: staggered fade-in of newly expan
 
 ### P1 — Code font
 
-Three persistent choices exist: modern monospace (default), system monospace, and sans-serif. Modern monospace prefers JetBrains Mono or Cascadia Code, then Menlo. Chinese falls back to PingFang SC / Microsoft YaHei; no large Chinese font is bundled. Other typography choices to review are font size, weight, and line height (currently 13px / 400, 24px in Tree and 20px in Raw).
+Six persistent choices exist: bundled JetBrains Mono (default), Fira Code, and Inconsolata, plus locally installed Menlo, Monaco, and Courier New. Only the Latin WOFF2 subsets are bundled; Chinese falls back to PingFang SC / Microsoft YaHei. Other typography choices to review are font size, weight, and line height (currently 13px / 400 by default, 24px in Tree and 22px in Raw).
 
 ### P2 — Information density
 

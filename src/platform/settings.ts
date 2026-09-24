@@ -3,7 +3,7 @@ import { hasChrome } from './env'
 
 export type ThemeMode = 'auto' | 'dark' | 'light'
 export type PaletteName = 'vscode' | 'github' | 'github-dimmed' | 'github-contrast'
-export type CodeFont = 'modern' | 'system' | 'sans'
+export type CodeFont = 'jetbrains' | 'fira' | 'inconsolata' | 'menlo' | 'monaco' | 'courier'
 
 export interface Settings {
   /** Allows one-time migration of preferences that previously had different defaults. */
@@ -44,7 +44,7 @@ export const DEFAULT_SETTINGS: Settings = {
   inlineBlocks: true,
   indent: 2,
   fontSize: 13,
-  fontFamily: 'modern',
+  fontFamily: 'jetbrains',
   animations: true,
   sortKeys: false,
   expandDepth: 1,
@@ -76,7 +76,8 @@ function isPalette(value: unknown): value is Settings['palette'] {
 }
 
 function isFontFamily(value: unknown): value is Settings['fontFamily'] {
-  return value === 'modern' || value === 'system' || value === 'sans'
+  return value === 'jetbrains' || value === 'fira' || value === 'inconsolata'
+    || value === 'menlo' || value === 'monaco' || value === 'courier'
 }
 
 function area(): chrome.storage.StorageArea | null {
@@ -109,6 +110,7 @@ export function normalizeSettings(raw: unknown): Settings {
     && typeof partial.compactGraph === 'boolean'
       ? partial.compactGraph
       : DEFAULT_SETTINGS.compactGraph
+  // Retired generic choices (modern/system/sans) migrate to a concrete bundled face.
   const fontFamily = isFontFamily(partial.fontFamily)
     ? partial.fontFamily
     : DEFAULT_SETTINGS.fontFamily

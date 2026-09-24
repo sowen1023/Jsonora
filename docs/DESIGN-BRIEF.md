@@ -211,11 +211,11 @@ UI:   Inter, "Avenir Next", "SF Pro Text", -apple-system, BlinkMacSystemFont,
 标题: Georgia, "Iowan Old Style", "Noto Serif CJK SC", "Source Han Serif SC",
       "Songti SC", SimSun, serif
 
-代码（现代等宽，默认）: "JetBrains Mono", "Cascadia Code", Menlo, Monaco,
-      SFMono-Regular, Consolas, "PingFang SC", "Microsoft YaHei", monospace
+代码（默认）: "Jsonora JetBrains Mono", Menlo, Consolas,
+      "PingFang SC", "Microsoft YaHei", monospace
 ```
 
-标题使用文档式衬线栈，控件与正文使用清晰的无衬线栈。JSON 字段可选「现代等宽」「系统等宽」「无衬线」三种字体；中文内容明确回退到 PingFang SC / 微软雅黑。
+标题使用文档式衬线栈，控件与正文使用清晰的无衬线栈。JSON 内容可选内置的 JetBrains Mono、Fira Code、Inconsolata，或本机安装的 Menlo、Monaco、Courier New；中文内容回退到 PingFang SC / 微软雅黑。
 
 ### 4.6 动效清单
 
@@ -265,9 +265,9 @@ UI:   Inter, "Avenir Next", "SF Pro Text", -apple-system, BlinkMacSystemFont,
 
 ### P1 — 代码字体
 
-目前提供三种可持久化选择：现代等宽（默认）、系统等宽、无衬线。现代等宽优先 JetBrains Mono / Cascadia Code，未安装时回退到 Menlo；中文继续回退到 PingFang SC / 微软雅黑，不额外打包大体积中文字体。
+目前提供六种可持久化选择：内置 JetBrains Mono（默认）、Fira Code、Inconsolata，以及依赖本机安装的 Menlo、Monaco、Courier New。只打包内置字体的 Latin WOFF2 子集；中文继续回退到 PingFang SC / 微软雅黑，不额外打包大体积中文字体。
 
-另外需要定：JSON 正文的字号、字重、行高。现在是 13px / 400 / 行高 24px（树）、20px（原始视图）。
+另外需要定：JSON 正文的字号、字重、行高。现在默认是 13px / 400 / 行高 24px（树）、22px（原始视图）。
 
 ### P2 — 信息密度
 

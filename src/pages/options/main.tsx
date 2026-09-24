@@ -4,6 +4,7 @@ import { resetSettings, type Settings } from '@/platform/settings'
 import { useResolvedTheme, useSettings } from '@/ui/useSettings'
 import { rootVars } from '@/ui/metrics'
 import { AutoTheme, BrandMark, Moon, Refresh, Sun } from '@/ui/Icons'
+import { FontSelect } from '@/ui/FontSelect'
 import '@/ui/styles/index.css'
 
 function Field(props: { label: string; desc?: string; control: ComponentChildren }) {
@@ -33,17 +34,19 @@ function Switch(props: { checked: boolean; onChange: (next: boolean) => void; la
 }
 
 function Segmented<T extends string | number>(props: {
+  label: string
   value: T
   options: { value: T; label: string }[]
   onChange: (next: T) => void
 }) {
   return (
-    <div class="jr-seg">
+    <div class="jr-seg" role="group" aria-label={props.label}>
       {props.options.map((option) => (
         <button
           key={String(option.value)}
           type="button"
           class={option.value === props.value ? 'is-active' : ''}
+          aria-pressed={option.value === props.value}
           onClick={() => props.onChange(option.value)}
         >
           {option.label}
@@ -103,11 +106,17 @@ function ThemePicker(props: {
   )
 }
 
-const paletteOptions: { value: Settings['palette']; zh: string; en: string }[] = [
-  { value: 'vscode', zh: 'VS Code', en: 'VS Code' },
-  { value: 'github', zh: 'GitHub 经典', en: 'GitHub Default' },
-  { value: 'github-dimmed', zh: 'GitHub 柔和', en: 'GitHub Dimmed' },
-  { value: 'github-contrast', zh: 'GitHub 高对比', en: 'GitHub High Contrast' },
+const paletteOptions: {
+  value: Settings['palette']
+  zh: string
+  en: string
+  noteZh: string
+  noteEn: string
+}[] = [
+  { value: 'vscode', zh: 'VS Code', en: 'VS Code', noteZh: '鲜明语法色', noteEn: 'Vivid syntax' },
+  { value: 'github', zh: 'GitHub 经典', en: 'GitHub Default', noteZh: '经典中性色', noteEn: 'Classic neutral' },
+  { value: 'github-dimmed', zh: 'GitHub 柔和', en: 'GitHub Dimmed', noteZh: '柔和蓝灰色', noteEn: 'Muted blue-gray' },
+  { value: 'github-contrast', zh: 'GitHub 高对比', en: 'GitHub High Contrast', noteZh: '清晰高对比', noteEn: 'High contrast' },
 ]
 
 function PalettePicker(props: {
@@ -116,7 +125,7 @@ function PalettePicker(props: {
   onChange: (next: Settings['palette']) => void
 }) {
   return (
-    <div class="jr-theme-picker" role="radiogroup" aria-label={props.language === 'en' ? 'Colour palette' : '配色方案'}>
+    <div class="jr-theme-picker jr-palette-picker" role="radiogroup" aria-label={props.language === 'en' ? 'Colour palette' : '配色方案'}>
       {paletteOptions.map((option) => (
         <button
           key={option.value}
@@ -128,12 +137,23 @@ function PalettePicker(props: {
           onClick={() => props.onChange(option.value)}
         >
           <span class="jr-palette-preview" aria-hidden="true">
-            <span class="is-light" />
-            <span class="is-dark" />
-            <i />
+            {(['light', 'dark'] as const).map((appearance) => (
+              <span class={`jr-palette-scene is-${appearance}`} key={appearance}>
+                <span class="jr-palette-toolbar"><span /></span>
+                <span class="jr-palette-code">
+                  <span class="jr-palette-brace">{'{'}</span>
+                  <span class="jr-palette-code-line">
+                    <span class="jr-palette-key">"a"</span><span class="jr-palette-punct">:</span><span class="jr-palette-string">"x"</span>
+                  </span>
+                  <span class="jr-palette-code-line">
+                    <span class="jr-palette-key">"n"</span><span class="jr-palette-punct">:</span><span class="jr-palette-number">1</span>
+                  </span>
+                </span>
+              </span>
+            ))}
           </span>
           <span class="jr-theme-name">{props.language === 'en' ? option.en : option.zh}</span>
-          <span class="jr-theme-note">{props.language === 'en' ? 'Light + dark' : '浅色 + 深色'}</span>
+          <span class="jr-theme-note">{props.language === 'en' ? option.noteEn : option.noteZh}</span>
         </button>
       ))}
     </div>
@@ -144,6 +164,7 @@ function Options() {
   const [settings, update] = useSettings()
   const theme = useResolvedTheme(settings.theme)
   const en = settings.language === 'en'
+  const version = typeof chrome !== 'undefined' ? chrome.runtime?.getManifest?.().version : undefined
 
   const patch = (next: Partial<Settings>) => update(next)
 
@@ -188,10 +209,11 @@ function Options() {
             <div class="jr-section-head">{en ? 'Appearance' : '外观'}</div>
             <div class="jr-section-body">
               <Field
-                label="界面语言 / Language"
+                label={en ? 'Language' : '界面语言'}
                 desc={en ? 'Switch interface text in the viewer and settings panel.' : '切换查看器与内置设置面板的界面文字。'}
                 control={
                   <Segmented
+                    label={en ? 'Language' : '界面语言'}
                     value={settings.language}
                     onChange={(language) => patch({ language })}
                     options={[
@@ -224,17 +246,13 @@ function Options() {
                 }
               />
               <Field
-                label={en ? 'Field font' : '字段字体'}
-                desc={en ? 'Choose the typeface used by JSON keys and values.' : '选择 JSON 键名、值与图形节点使用的字体。'}
+                label={en ? 'Code font' : '代码字体'}
+                desc={en ? 'Three code fonts are included; fonts such as Menlo use local installations.' : '内置三款代码字体；Menlo 等字体需本机安装。'}
                 control={
-                  <Segmented
+                  <FontSelect
                     value={settings.fontFamily}
+                    language={settings.language}
                     onChange={(fontFamily) => patch({ fontFamily })}
-                    options={[
-                      { value: 'modern' as const, label: en ? 'Modern' : '现代等宽' },
-                      { value: 'system' as const, label: en ? 'System' : '系统等宽' },
-                      { value: 'sans' as const, label: en ? 'Sans' : '无衬线' },
-                    ]}
                   />
                 }
               />
@@ -305,6 +323,7 @@ function Options() {
                 desc={en ? 'Used when formatting, copying and exporting JSON.' : '用于「美化」以及详情面板中复制/导出的 JSON。'}
                 control={
                   <Segmented
+                    label={en ? 'Default indent' : '默认缩进'}
                     value={settings.indent}
                     onChange={(value) => patch({ indent: value })}
                     options={[
@@ -337,11 +356,11 @@ function Options() {
                 }
               />
               <Field
-                label={en ? 'Sort keys by default' : '默认按字母排序键名'}
-                desc={en ? 'Sort object keys alphabetically without changing array order.' : '对象键按字典序排列，数组顺序不变。也可以在查看器里临时切换。'}
+                label={en ? 'Sort structure keys by default' : '默认排序结构键名'}
+                desc={en ? 'Sort object keys in Graph and Tree; the JSON text and array order stay unchanged.' : '仅调整图形和树形中对象键的顺序；左侧 JSON 文本与数组顺序不变。'}
                 control={
                   <Switch
-                    label={en ? 'Sort keys by default' : '默认按字母排序键名'}
+                    label={en ? 'Sort structure keys by default' : '默认排序结构键名'}
                     checked={settings.sortKeys}
                     onChange={(next) => patch({ sortKeys: next })}
                   />
@@ -439,7 +458,7 @@ function Options() {
               <Field
                 label="Jsonora"
                 desc={en ? 'A fast, considered JSON viewer. Local parsing, no network requests, no telemetry.' : '一个更快、更好看的 JSON 查看器。纯本地解析，无网络请求，无遥测。'}
-                control={<span class="jr-field-desc">v{chrome.runtime.getManifest().version}</span>}
+                control={<span class="jr-field-desc">{version ? `v${version}` : 'dev'}</span>}
               />
               <Field
                 label={en ? 'Restore defaults' : '恢复默认设置'}

@@ -91,12 +91,8 @@
     'Microsoft YaHei UI', system-ui, sans-serif;
   --font-display: Georgia, 'Iowan Old Style', 'Noto Serif CJK SC', 'Source Han Serif SC',
     'Songti SC', SimSun, serif;
-  /* Ordered by what actually resolves on each platform. `ui-monospace` used to come first,
-     but Chrome on macOS does not match it, so the stack silently landed on Menlo. The CJK
-     faces at the end are deliberate: no system monospace has Chinese glyphs, so a payload
-     with Chinese strings falls back to a proportional face and the mixed metrics show. */
-  --font-mono: 'JetBrains Mono', 'Cascadia Code', Menlo, Monaco, 'SFMono-Regular',
-    Consolas, 'Liberation Mono', 'PingFang SC',
+  /* The JS root variable chooses the selected face. This is the pre-settings fallback. */
+  --font-mono: 'Jsonora JetBrains Mono', Menlo, Consolas, 'PingFang SC',
     'Hiragino Sans GB', 'Microsoft YaHei', monospace;
 
   --font-size: 13px;

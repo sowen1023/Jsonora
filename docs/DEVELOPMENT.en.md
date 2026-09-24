@@ -34,7 +34,7 @@ Run `npm run fixtures` to start local test pages. `tools/cdp-shot.mjs` can captu
 | `src/platform/` | Chrome API detection, settings storage, temporary cross-context data handoff |
 | `tools/` | Icon generation, extension build, test pages, screenshot utilities |
 
-The build has three passes: extension pages use ES modules; the content script and service worker are each bundled into a single classic script. The content script injects its own styles into a Shadow DOM rather than relying on the host page's CSS. The release package also includes Jsonora's MIT license and `THIRD_PARTY_NOTICES.txt`, generated from the lockfile for runtime dependencies.
+The build has three passes: extension pages use ES modules; the content script and service worker are each bundled into a single classic script. The content script injects its own styles into a Shadow DOM rather than relying on the host page's CSS. The release package also includes Jsonora's MIT license and `THIRD_PARTY_NOTICES.txt`, generated from the lockfile for runtime dependencies (including the bundled OFL fonts). Only Latin WOFF2 subsets are bundled; Chinese characters use a system-font fallback.
 
 ## Changing the icon
 

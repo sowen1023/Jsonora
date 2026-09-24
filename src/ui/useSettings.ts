@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { DEFAULT_SETTINGS, loadSettings, saveSettings, subscribeSettings } from '@/platform/settings'
 import type { ResolvedTheme, Settings } from '@/platform/settings'
+import { ensureCodeFonts } from './codeFonts'
 
 export function useSettings(): [Settings, (patch: Partial<Settings>) => void] {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
 
   useEffect(() => {
+    void ensureCodeFonts()
     let alive = true
     void loadSettings().then((loaded) => {
       if (alive) setSettings(loaded)

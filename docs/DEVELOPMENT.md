@@ -35,7 +35,7 @@ npm run zip        # 构建并生成 jsonora-<version>.zip
 | `tools/` | 图标生成、扩展构建、测试页面与截图辅助 |
 
 构建分三次进行：扩展页面使用 ES modules；内容脚本和 service worker 分别打成单个 classic script。内容脚本把样式注入 Shadow DOM，因此不会借用宿主网页的 CSS。
-发布包还会包含项目 MIT 协议，以及从 lockfile 中运行时依赖的许可文本生成的 `THIRD_PARTY_NOTICES.txt`。
+发布包还会包含项目 MIT 协议，以及从 lockfile 中运行时依赖（包括随包提供的 OFL 字体）的许可文本生成的 `THIRD_PARTY_NOTICES.txt`。代码字体仅打包 Latin WOFF2 子集，中文字符由系统字体回退显示。
 
 ## 修改图标
 

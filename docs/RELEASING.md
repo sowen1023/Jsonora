@@ -15,8 +15,8 @@ npm ci
 npm run typecheck
 npm test
 npm run zip
-unzip -l jsonora-0.1.1.zip
-unzip -p jsonora-0.1.1.zip manifest.json
+unzip -l jsonora-0.1.2.zip
+unzip -p jsonora-0.1.2.zip manifest.json
 ```
 
 文件名里的版本来自 `package.json`，构建脚本会同步写入打包后的 manifest；以后发布新版本时，先修改 `package.json` 的版本号和对应的 lockfile，再重新运行命令。若修改了 Logo，先执行 `npm run icons` 重新生成四种 PNG 图标。`npm run zip` 会重新构建 `dist/`，并在项目根目录生成 ZIP；打包失败会返回非零状态。

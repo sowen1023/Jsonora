@@ -15,6 +15,7 @@ import {
   type GraphNodeBox,
 } from '@/core/layout'
 import { createTextMeasure, easeOut } from './measure'
+import { ensureCodeFonts } from './codeFonts'
 import { Highlighted } from './Highlighted'
 import { Cards, Fit, Graph, Grid, Minus, Plus } from './Icons'
 import { useI18n } from './i18n'
@@ -82,6 +83,15 @@ export function GraphView(props: GraphViewProps) {
   const [dragging, setDragging] = useState(false)
   const [hint, setHint] = useState(true)
   const [autoSeq, setAutoSeq] = useState(0)
+  const [fontLoadSeq, setFontLoadSeq] = useState(0)
+
+  useEffect(() => {
+    let alive = true
+    void ensureCodeFonts().then(() => {
+      if (alive) setFontLoadSeq((value) => value + 1)
+    })
+    return () => { alive = false }
+  }, [])
 
   /**
    * Cards the graph is holding shut so the opening view stays legible. Recomputed per
@@ -109,7 +119,7 @@ export function GraphView(props: GraphViewProps) {
     const makeLayout = props.compactGraph ? layoutCompactGraph : layoutGraph
     return makeLayout(model, expandedSet, { measure, maxNodes: GRAPH_MAX_NODES })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [model, expandedSet, expandSeq, autoSeq, fontSize, fontFamily, props.compactGraph])
+  }, [model, expandedSet, expandSeq, autoSeq, fontSize, fontFamily, fontLoadSeq, props.compactGraph])
 
   const selectedPath = useMemo(() => {
     const path = new Set<number>()

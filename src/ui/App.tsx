@@ -741,7 +741,8 @@ export function JsonoraApp(props: AppProps) {
         )}
       </div>
 
-      <div class="jr-body">
+      <div class={settingsOpen ? 'jr-body has-settings' : 'jr-body'}>
+        <div class="jr-viewer-region">
         {!doc && !busy && !editorOpen && (
           <EmptyState
             compact={compact}
@@ -939,6 +940,7 @@ export function JsonoraApp(props: AppProps) {
             onCopy={(value, label) => void copy(value, label)}
           />
         )}
+        </div>
 
         {settingsOpen && (
           <SettingsPanel

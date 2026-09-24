@@ -7,6 +7,16 @@ describe('settings migration', () => {
     expect(settings.palette).toBe('vscode')
     expect(settings.compactGraph).toBe(true)
     expect(settings.showGrid).toBe(false)
+    expect(settings.fontFamily).toBe('jetbrains')
+  })
+
+  it('migrates retired generic fonts and preserves named choices', () => {
+    expect(normalizeSettings({ fontFamily: 'modern' }).fontFamily).toBe('jetbrains')
+    expect(normalizeSettings({ fontFamily: 'system' }).fontFamily).toBe('jetbrains')
+    expect(normalizeSettings({ fontFamily: 'sans' }).fontFamily).toBe('jetbrains')
+    expect(normalizeSettings({ fontFamily: 'fira' }).fontFamily).toBe('fira')
+    expect(normalizeSettings({ fontFamily: 'monaco' }).fontFamily).toBe('monaco')
+    expect(normalizeSettings({ fontFamily: 'missing' }).fontFamily).toBe('jetbrains')
   })
 
   it('moves old palettes and the former expanded-graph default to current choices', () => {
