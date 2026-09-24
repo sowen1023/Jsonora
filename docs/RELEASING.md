@@ -1,5 +1,7 @@
 # 打包与发布 Chrome 扩展
 
+简体中文 · [English](RELEASING.en.md)
+
 Jsonora 是 Manifest V3 扩展。`dist/` 用于本地加载，`jsonora-<version>.zip` 用于上传 Chrome Web Store；ZIP 内的 `manifest.json` 必须在压缩包根目录。打包不等于已经上架，商店提交还需要开发者账号、公开素材与隐私声明。
 
 `package.json` 中的 `private: true` 只阻止意外发布到 npm，不妨碍源码按 MIT 开源，也不妨碍将 ZIP 发布到 Chrome Web Store。
@@ -38,7 +40,7 @@ unzip -p jsonora-0.1.0.zip manifest.json
 3. 填写 **Store listing**（描述、语言、截图等）、**Privacy**（单一用途、权限理由、数据使用、隐私政策）、**Distribution**，以及需要时的 **Test instructions**。
 4. 完成后台检查后选择 **Submit for Review**。审核通过后的发布时间取决于你在提交时选择立即发布还是延后发布。
 
-我们不会通过构建脚本自动上传，也不会替你提交审核。商店 UI 与素材要求可能变化，以 [Chrome 官方准备指南](https://developer.chrome.com/docs/webstore/prepare)、[发布指南](https://developer.chrome.com/docs/webstore/publish)和[商店资料指南](https://developer.chrome.com/docs/webstore/cws-dashboard-listing)为准。
+构建脚本不会自动上传或提交审核。商店 UI 与素材要求可能变化，以 [Chrome 官方准备指南](https://developer.chrome.com/docs/webstore/prepare)、[发布指南](https://developer.chrome.com/docs/webstore/publish)和[商店资料指南](https://developer.chrome.com/docs/webstore/cws-dashboard-listing)为准。
 
 ## 后续更新
 

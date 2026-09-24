@@ -1,5 +1,7 @@
 # Jsonora 设计说明（内部参考）
 
+简体中文 · [English](DESIGN-BRIEF.en.md)
+
 > 一个 Chrome JSON 查看器扩展。产品使用与当前品牌信息以 [README](../README.md)、[品牌文档](BRAND.md) 和代码为准；本说明保留设计迭代时的问题与取舍。
 
 ---

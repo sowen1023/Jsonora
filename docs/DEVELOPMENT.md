@@ -1,5 +1,7 @@
 # 开发 Jsonora
 
+简体中文 · [English](DEVELOPMENT.en.md)
+
 Jsonora 是 Chrome Manifest V3 扩展。查看器 UI 使用 Preact、TypeScript 和 Vite；JSON 解析、格式化、模型与图形布局在 `src/core/` 中，与浏览器 API 分离。
 
 ## 环境与命令

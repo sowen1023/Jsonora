@@ -4,6 +4,8 @@
 
 <h1 align="center">Jsonora</h1>
 
+<p align="center">简体中文 · <a href="README.en.md">English</a></p>
+
 <p align="center">让 JSON 从一整页字符，变成清晰可读的结构。</p>
 
 <p align="center">Chrome 扩展 · 原始 JSON / 图形 / 树形 · 本地处理 · MIT 开源</p>
@@ -42,8 +44,10 @@ npm run build
 - [使用指南](docs/USAGE.md)：视图、编辑、搜索、快捷键与限制
 - [开发指南](docs/DEVELOPMENT.md)：环境、命令、结构和验证
 - [打包与发布](docs/RELEASING.md)：Chrome Web Store 提交清单
+- [商店资料草稿](docs/STORE-LISTING.md)：双语简介、权限理由和审核测试说明
 - [隐私说明](docs/PRIVACY.md)：页面内容、临时存储和扩展权限
 - [品牌与 Logo](docs/BRAND.md)：矢量稿、PNG 图标和用色
+- [设计说明](docs/DESIGN-BRIEF.md)：设计迭代的内部参考
 - [参与贡献](CONTRIBUTING.md)：问题报告与代码提交
 
 问题与建议可在 [GitHub Issues](https://github.com/sowen1023/Jsonora/issues) 提出；请勿附上真实接口数据或凭据。

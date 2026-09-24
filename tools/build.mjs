@@ -91,6 +91,7 @@ async function copyStatic() {
   await fsp.writeFile(path.join(dist, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n')
   await fsp.copyFile(path.join(root, 'LICENSE'), path.join(dist, 'LICENSE'))
   await writeThirdPartyNotices()
+  await fsp.cp(path.join(src, '_locales'), path.join(dist, '_locales'), { recursive: true })
 
   const iconsSrc = path.join(src, 'icons')
   if (!fs.existsSync(path.join(iconsSrc, 'icon128.png'))) {
@@ -127,6 +128,7 @@ async function runAll() {
   await buildScript('content/index.ts', 'content.js')
   await buildScript('background/index.ts', 'background.js')
   await copyStatic()
+  await escapeScriptNoncharacters()
 
   if (zip) {
     const out = path.join(root, `jsonora-${pkg.version}.zip`)
@@ -154,6 +156,26 @@ async function walk(dir) {
     else out.push({ path: p, size: (await fsp.stat(p)).size })
   }
   return out
+}
+
+/**
+ * CodeMirror uses U+FFFF as an internal sentinel. It is valid UTF-8, but Chrome's
+ * content-script validator rejects Unicode noncharacters and reports them as an
+ * encoding error. Keep the runtime character while making the bundle source safe.
+ */
+async function escapeScriptNoncharacters() {
+  for (const file of await walk(dist)) {
+    if (!file.path.endsWith('.js')) continue
+    const source = new TextDecoder('utf-8', { fatal: true }).decode(await fsp.readFile(file.path))
+    const escaped = source.replaceAll('\uFFFE', '\\uFFFE').replaceAll('\uFFFF', '\\uFFFF')
+    for (const character of escaped) {
+      const codepoint = character.codePointAt(0)
+      if ((codepoint >= 0xfdd0 && codepoint <= 0xfdef) || (codepoint & 0xfffe) === 0xfffe) {
+        throw new Error(`Unsupported Unicode noncharacter in ${path.relative(dist, file.path)}`)
+      }
+    }
+    if (escaped !== source) await fsp.writeFile(file.path, escaped)
+  }
 }
 
 await runAll()

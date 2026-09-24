@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Jsonora — JSON 查看器",
+  "name": "__MSG_extensionName__",
+  "default_locale": "en",
   "version": "0.1.0",
-  "description": "美观、快速的 JSON 查看器：自动渲染 JSON 响应、树形视图、语法高亮、搜索与格式化。A beautiful JSON viewer.",
+  "description": "__MSG_extensionDescription__",
   "minimum_chrome_version": "120",
   "icons": {
     "16": "icons/icon16.png",

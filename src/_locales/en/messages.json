@@ -1,0 +1,10 @@
+{
+  "extensionName": {
+    "message": "Jsonora — JSON Viewer",
+    "description": "Extension name shown in Chrome and the Web Store"
+  },
+  "extensionDescription": {
+    "message": "View, edit, search, and visualize JSON in Chrome. Explore responses, local files, and code blocks with graph and tree views.",
+    "description": "Short extension description shown in Chrome and the Web Store"
+  }
+}

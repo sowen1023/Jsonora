@@ -1,0 +1,10 @@
+{
+  "extensionName": {
+    "message": "Jsonora — JSON 查看器",
+    "description": "在 Chrome 和应用商店中显示的扩展名称"
+  },
+  "extensionDescription": {
+    "message": "在 Chrome 中查看、编辑、搜索和可视化 JSON；用图形与树形视图阅读接口响应、本地文件和网页代码块。",
+    "description": "在 Chrome 和应用商店中显示的简短说明"
+  }
+}
