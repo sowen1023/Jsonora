@@ -15,8 +15,8 @@ npm ci
 npm run typecheck
 npm test
 npm run zip
-unzip -l jsonora-0.1.0.zip
-unzip -p jsonora-0.1.0.zip manifest.json
+unzip -l jsonora-0.1.1.zip
+unzip -p jsonora-0.1.1.zip manifest.json
 ```
 
 The archive name comes from `package.json`; the build script also copies that version into the packaged manifest. For future releases, bump the version in `package.json` and its lockfile first. If the logo changes, run `npm run icons` before packaging. `npm run zip` rebuilds `dist/` and writes the ZIP to the repository root, failing with a nonzero exit code if packaging fails.

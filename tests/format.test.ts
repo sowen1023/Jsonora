@@ -3,6 +3,7 @@ import {
   formatBytes,
   formatCount,
   formatMs,
+  indentJsonSource,
   isUnsafeInteger,
   minify,
   sortKeysDeep,
@@ -25,6 +26,26 @@ describe('stringify / minify', () => {
   it('round-trips through JSON.parse', () => {
     const value = { a: [1, { b: null }], c: 'x' }
     expect(JSON.parse(stringify(value, 2))).toEqual(value)
+  })
+})
+
+describe('indentJsonSource', () => {
+  it('lays out single-line objects and arrays without changing their values', () => {
+    expect(indentJsonSource('{"a":[{"b":1},{}],"c":[]}')).toBe(
+      '{\n  "a": [\n    {\n      "b": 1\n    },\n    {}\n  ],\n  "c": []\n}',
+    )
+  })
+
+  it('preserves large number literals, escapes, and punctuation inside strings', () => {
+    const source = String.raw`{"id":9007199254740993,"message":"a,{}:\\n\\\"b"}`
+    const result = indentJsonSource(source)
+    expect(result).toBe('{' + '\n  "id": 9007199254740993,\n  "message": '
+      + String.raw`"a,{}:\\n\\\"b"` + '\n}')
+  })
+
+  it('respects tabs and leaves multiline source alone', () => {
+    expect(indentJsonSource('{"a":1}', 'tab')).toBe('{\n\t"a": 1\n}')
+    expect(indentJsonSource('{\n "a":1\n}')).toBe('{\n "a":1\n}')
   })
 })
 

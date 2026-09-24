@@ -108,6 +108,11 @@ const autoPage = `<!doctype html>
 <script src="/content.js"></script>
 </body></html>`
 
+const compactPage = autoPage.replace(
+  JSON.stringify(users, null, 2),
+  JSON.stringify(users),
+)
+
 const inlinePage = docsPage.replace(
   '</body>',
   '<script src="/content.js"></script>\n</body>',
@@ -133,6 +138,7 @@ const routes = {
   '/plain': () => ['text/plain; charset=utf-8', JSON.stringify(users, null, 2)],
   '/page': () => ['text/html; charset=utf-8', docsPage],
   '/harness/auto': () => ['text/html; charset=utf-8', autoPage],
+  '/harness/compact': () => ['text/html; charset=utf-8', compactPage],
   '/harness/inline': () => ['text/html; charset=utf-8', inlinePage],
   '/harness/escaped': () => ['text/html; charset=utf-8', `<pre id="p">${escaped}</pre>`],
   '/text': () => ['text/plain; charset=utf-8', 'just some text, not json at all'],

@@ -439,7 +439,7 @@ function Options() {
               <Field
                 label="Jsonora"
                 desc={en ? 'A fast, considered JSON viewer. Local parsing, no network requests, no telemetry.' : '一个更快、更好看的 JSON 查看器。纯本地解析，无网络请求，无遥测。'}
-                control={<span class="jr-field-desc">v0.1.0</span>}
+                control={<span class="jr-field-desc">v{chrome.runtime.getManifest().version}</span>}
               />
               <Field
                 label={en ? 'Restore defaults' : '恢复默认设置'}

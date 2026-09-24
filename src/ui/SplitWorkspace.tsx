@@ -6,6 +6,8 @@ import { useI18n } from './i18n'
 
 interface SplitWorkspaceProps {
   rightMode: VisualMode
+  rightCollapsed: boolean
+  onRightCollapsedChange: (collapsed: boolean) => void
   showGrid: boolean
   onToggleGrid: () => void
   compactGraph: boolean
@@ -20,7 +22,7 @@ export function SplitWorkspace(props: SplitWorkspaceProps) {
   const drag = useRef<{ pointerId: number } | null>(null)
   const [leftWidth, setLeftWidth] = useState(37)
   const [leftCollapsed, setLeftCollapsed] = useState(false)
-  const [rightCollapsed, setRightCollapsed] = useState(false)
+  const { rightCollapsed } = props
   const [resizing, setResizing] = useState(false)
 
   const resizeAt = (clientX: number) => {
@@ -123,7 +125,7 @@ export function SplitWorkspace(props: SplitWorkspaceProps) {
           type="button"
           title={t('showVisual')}
           aria-label={t('showVisual')}
-          onClick={() => setRightCollapsed(false)}
+          onClick={() => props.onRightCollapsedChange(false)}
         >
           {props.rightMode === 'graph' ? <Graph /> : <Tree />}
           <span>{t('visualPanel')}</span>
@@ -161,7 +163,7 @@ export function SplitWorkspace(props: SplitWorkspaceProps) {
               type="button"
               title={t('collapseVisual')}
               aria-label={t('collapseVisual')}
-              onClick={() => setRightCollapsed(true)}
+              onClick={() => props.onRightCollapsedChange(true)}
             >
               <PanelRight />
             </button>

@@ -6,6 +6,67 @@ export function stringify(value: unknown, indent: IndentOption = 2): string {
   return JSON.stringify(value, null, indent === 'tab' ? '\t' : indent) ?? String(value)
 }
 
+/**
+ * Adds display-only indentation to an already validated, single-line JSON source.
+ * Unlike JSON.parse + JSON.stringify, this keeps numeric literals and string escapes
+ * byte-for-byte intact. The caller retains the original source for export.
+ */
+export function indentJsonSource(text: string, indent: IndentOption = 2): string {
+  if (/[\r\n]/.test(text)) return text
+
+  const unit = indent === 'tab' ? '\t' : ' '.repeat(indent)
+  const parts: string[] = []
+  const nonEmpty: boolean[] = []
+  let depth = 0
+  let inString = false
+  let escaped = false
+
+  const newline = () => parts.push('\n', unit.repeat(depth))
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i]
+    if (inString) {
+      parts.push(char)
+      if (escaped) escaped = false
+      else if (char === '\\') escaped = true
+      else if (char === '"') inString = false
+      continue
+    }
+
+    if (char === '"') {
+      inString = true
+      parts.push(char)
+    } else if (/\s/.test(char)) {
+      continue
+    } else if (char === '{' || char === '[') {
+      parts.push(char)
+      let next = i + 1
+      while (next < text.length && /\s/.test(text[next])) next++
+      const hasChildren = text[next] !== (char === '{' ? '}' : ']')
+      nonEmpty.push(hasChildren)
+      if (hasChildren) {
+        depth++
+        newline()
+      }
+    } else if (char === '}' || char === ']') {
+      if (nonEmpty.pop()) {
+        depth--
+        newline()
+      }
+      parts.push(char)
+    } else if (char === ',') {
+      parts.push(char)
+      newline()
+    } else if (char === ':') {
+      parts.push(': ')
+    } else {
+      parts.push(char)
+    }
+  }
+
+  return parts.join('')
+}
+
 export function minify(value: unknown): string {
   return JSON.stringify(value) ?? String(value)
 }

@@ -12,13 +12,13 @@
 
 ![Jsonora split-pane workspace](docs/preview-current.png)
 
-Jsonora opens a split-pane workspace on JSON response pages: editable, foldable raw JSON on the left, and a compact graph or virtualized tree on the right. You can also expand JSON code blocks in ordinary web pages. The interface supports English and Chinese, plus several light and dark themes.
+Jsonora automatically formats JSON responses in the left pane while retaining the original source for copying and downloading. The Graph/Tree pane starts collapsed and can be opened from View when needed. You can also expand JSON code blocks in ordinary web pages. The interface supports English and Chinese, plus several light and dark themes.
 
 ## Where to start
 
 | What you want to do | Entry point |
 | --- | --- |
-| Read an API's JSON response | Open the API URL to see raw JSON alongside a structural view |
+| Read an API's JSON response | Open the API URL to see formatted JSON; open Graph or Tree when needed |
 | Inspect pasted data or a local file | Use File → Paste / Open File, or drag in a `.json` file |
 | Read JSON examples on a web page | Click the rendering prompt to expand eligible code blocks in place |
 | Find a deeply nested field | Search plain text or regex, reveal its path in the graph/tree, and inspect its details |

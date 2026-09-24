@@ -2,13 +2,13 @@
 
 [简体中文](USAGE.md) · English
 
-The main workspace always shows raw JSON on the left. On the right, choose either Graph or Tree. Each side can be collapsed independently, and the divider can be dragged to resize them.
+The main workspace always shows JSON on the left: single-line input is formatted automatically, while copying and downloading still use the original source. The Graph/Tree pane starts collapsed; open it from View or the right-hand rail. Once open, either pane can be collapsed and the divider can be dragged to resize them.
 
 ## Start with your task
 
 | What you want to do | Where to start |
 | --- | --- |
-| Read an API's JSON response | Open the endpoint; Jsonora displays a split-pane viewer when it detects JSON |
+| Read an API's JSON response | Open the endpoint; Jsonora displays formatted JSON when it detects a response |
 | Inspect a JSON example on a web page | Click the rendering prompt in the lower-right corner to expand eligible `<pre>` blocks in place |
 | Check JSON on the clipboard | Paste in the viewer, or use Quick Paste from the extension popup |
 | Open a local `.json` file | Use File → Open File or drag the file into the viewer; `file://` pages require separate Chrome permission |
@@ -20,7 +20,7 @@ The main workspace always shows raw JSON on the left. On the right, choose eithe
 
 The left pane offers syntax highlighting, line numbers, and folding for objects and arrays. Click the small square beside a line number to collapse a structure without deleting its contents. File → Edit JSON opens an editable version; syntax errors are reported before changes are applied. You can press `⌘/Ctrl + Enter` to apply an edit.
 
-The File menu also lets you paste, copy, and download JSON. Copy and export use the default indentation configured in Settings. Search supports plain text, regular expressions, case sensitivity, and showing only matches.
+The File menu also lets you paste, copy, and download JSON. Automatic formatting changes only the display; copy and download still use the original input. Explicit formatting, minifying, or applying an edit changes the content used afterward. Search supports plain text, regular expressions, case sensitivity, and showing only matches.
 
 ## Graph and Tree
 

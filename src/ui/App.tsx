@@ -6,6 +6,7 @@ import { JsonModel, pathToString } from '@/core/model'
 import { copyText } from '@/core/copy'
 import {
   downloadText,
+  indentJsonSource,
   minify as minifyValue,
   stringify,
   suggestFilename,
@@ -78,11 +79,14 @@ export function JsonoraApp(props: AppProps) {
   settingsRef.current = settings
 
   const [text, setText] = useState('')
+  const [preserveSourceLayout, setPreserveSourceLayout] = useState(false)
   const [doc, setDoc] = useState<Loaded | null>(null)
   const [busy, setBusy] = useState(false)
   const [view, setView] = useState<ViewMode>('raw')
   const [visualView, setVisualView] = useState<VisualMode>('graph')
+  const [visualCollapsed, setVisualCollapsed] = useState(true)
   const [editorOpen, setEditorOpen] = useState(false)
+  const [editorInitialText, setEditorInitialText] = useState('')
   const [expandSeq, setExpandSeq] = useState(0)
   const [selected, setSelected] = useState<number | null>(null)
   const [modalNode, setModalNode] = useState<number | null>(null)
@@ -131,6 +135,7 @@ export function JsonoraApp(props: AppProps) {
     ) => {
       window.clearTimeout(loadTimer.current)
       setText(next)
+      setPreserveSourceLayout(false)
       setSelected(null)
       setModalNode(null)
       setHits([])
@@ -185,8 +190,13 @@ export function JsonoraApp(props: AppProps) {
   const model = doc?.model ?? null
   const splitLayout = mode === 'page' && !!doc?.result.ok && !!model
   const activeSearchView = splitLayout ? 'raw' : view
-  const treeVisible = splitLayout ? visualView === 'tree' : view === 'tree'
-  const lines = useMemo(() => (text ? text.split('\n') : []), [text])
+  const treeVisible = splitLayout ? !visualCollapsed && visualView === 'tree' : view === 'tree'
+  const displayText = useMemo(() => (
+    !preserveSourceLayout && doc?.result.ok && doc.result.format === 'json' && doc.result.text === text
+      ? indentJsonSource(text, settings.indent)
+      : text
+  ), [doc, text, settings.indent, preserveSourceLayout])
+  const lines = useMemo(() => (displayText ? displayText.split('\n') : []), [displayText])
 
   const rows = useMemo<readonly number[]>(() => {
     if (!model) return EMPTY_ROWS
@@ -534,6 +544,7 @@ export function JsonoraApp(props: AppProps) {
     if (!doc?.result.ok) return
     setView('raw')
     load(minifyValue(doc.result.value))
+    setPreserveSourceLayout(true)
     pushToast(t('minified'))
   }, [doc, load, pushToast, t])
 
@@ -599,8 +610,9 @@ export function JsonoraApp(props: AppProps) {
     setView('raw')
     setSearchOpen(false)
     setQuery('')
+    setEditorInitialText(displayText)
     setEditorOpen(true)
-  }, [editorOpen])
+  }, [displayText, editorOpen])
 
   const handleApplyEdit = useCallback((next: string) => {
     setEditorOpen(false)
@@ -648,7 +660,11 @@ export function JsonoraApp(props: AppProps) {
         view={view}
         onView={setView}
         visualView={visualView}
-        onVisualView={setVisualView}
+        onVisualView={(next) => {
+          setVisualView(next)
+          setVisualCollapsed(false)
+        }}
+        visualOpen={!visualCollapsed}
         hasDoc={hasModel}
         hasText={hasText}
         searchOpen={searchOpen}
@@ -739,13 +755,15 @@ export function JsonoraApp(props: AppProps) {
         {splitLayout && doc?.result.ok && model && (
           <SplitWorkspace
             rightMode={visualView}
+            rightCollapsed={visualCollapsed}
+            onRightCollapsedChange={setVisualCollapsed}
             showGrid={settings.showGrid}
             onToggleGrid={() => updateSettings({ showGrid: !settings.showGrid })}
             compactGraph={settings.compactGraph}
             onToggleCompactGraph={() => updateSettings({ compactGraph: !settings.compactGraph })}
             left={editorOpen ? (
               <JsonEditor
-                initialText={text}
+                initialText={editorInitialText}
                 indent={settings.indent}
                 theme={theme}
                 focusRef={editorFocus}
@@ -813,7 +831,7 @@ export function JsonoraApp(props: AppProps) {
 
         {editorOpen && !splitLayout && (
           <JsonEditor
-            initialText={text}
+            initialText={editorInitialText}
             indent={settings.indent}
             theme={theme}
             focusRef={editorFocus}

@@ -21,6 +21,7 @@ export interface ToolbarProps {
   view: ViewMode
   onView: (view: ViewMode) => void
   visualView: VisualMode
+  visualOpen: boolean
   onVisualView: (view: VisualMode) => void
   hasDoc: boolean
   hasText: boolean
@@ -61,8 +62,8 @@ export function Toolbar(props: ToolbarProps) {
   // back to Raw after switching to Tree or Graph.
   const viewMenu: MenuEntry[] = density === 'full'
     ? [
-        { label: t('viewGraph'), checked: props.visualView === 'graph', disabled: !hasDoc, onClick: () => props.onVisualView('graph') },
-        { label: t('viewTree'), checked: props.visualView === 'tree', disabled: !hasDoc, onClick: () => props.onVisualView('tree') },
+        { label: t('viewGraph'), checked: props.visualOpen && props.visualView === 'graph', disabled: !hasDoc, onClick: () => props.onVisualView('graph') },
+        { label: t('viewTree'), checked: props.visualOpen && props.visualView === 'tree', disabled: !hasDoc, onClick: () => props.onVisualView('tree') },
       ]
     : [
         { label: t('viewRaw'), checked: props.view === 'raw', disabled: !hasText, onClick: () => props.onView('raw') },
